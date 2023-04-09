@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { useAtom, useAtomValue } from "jotai";
 import { genderAtom, progressBarAtom } from "@/jotai/atoms";
 import Messages from "@/components/chatting/Messages";
 import Answers from "@/components/chatting/Answers";
 import TodayDate from "@/components/chatting/TodayDate";
+import { NextPageWithLayout } from "@/types/types";
 import ProgressBarContainer from "@/components/layout/ProgressBarContainer";
 
 const today = new Date();
@@ -50,14 +51,14 @@ const ChattingPage = () => {
   }, []);
 
   return (
-    <ProgressBarContainer>
-      <div className="flex flex-col w-full h-[calc(100%_-_76px)]">
-        <TodayDate />
-        <Messages messages={messages} />
-        <Answers messages={messages} setMessages={setMessages} />
-      </div>
-    </ProgressBarContainer>
+    <div className="flex flex-col w-full h-[calc(100%_-_76px)]">
+      <TodayDate />
+      <Messages messages={messages} />
+      <Answers messages={messages} setMessages={setMessages} />
+    </div>
   );
 };
-
+ChattingPage.getLayout = function getLayout(page: ReactElement) {
+  return <ProgressBarContainer>{page}</ProgressBarContainer>;
+};
 export default ChattingPage;
