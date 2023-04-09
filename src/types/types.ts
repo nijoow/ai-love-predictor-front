@@ -9,7 +9,7 @@ export type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 export type Message = {
-  role: 'USER' | 'AI';
+  role: "USER" | "AI";
   profile?: boolean;
   content: string;
   delay: number;
