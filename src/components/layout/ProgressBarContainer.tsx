@@ -11,7 +11,7 @@ const ProgressBarContainer = ({ children }: { children: ReactNode }) => {
     <div className="flex flex-col h-full">
       <motion.div className="w-[400px] h-3 bg-pink-lighter mt-12 mb-4 mx-auto rounded-full">
         <motion.div
-          className="relative flex items-center h-full rounded-full bg-pink-light"
+          className="relative flex items-center h-full rounded-full bg-pink-light w-0"
           animate={{ width: `${progress}%` }}
         >
           <HeartBaloon className="absolute -right-[17.5px] -top-10" />
