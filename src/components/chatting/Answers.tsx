@@ -1,17 +1,18 @@
-import { messageLoadingAtom } from "@/jotai/atoms";
+import { answersAtom, messageLoadingAtom, messagesAtom } from "@/jotai/atoms";
 import { Message } from "@/types/types";
 import { useAtom } from "jotai";
 import React from "react";
 
-const Answers = ({
-  messages,
-  setMessages,
-}: {
-  messages: Message[];
-  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
-}) => {
+const Answers = () => {
   const CURRENT_TIME = new Date().toLocaleTimeString().slice(0, -3);
   const [messageLoading, setMessageLoading] = useAtom(messageLoadingAtom);
+  const [answers, setAnswers] = useAtom(answersAtom);
+  const [messages, setMessages] = useAtom(messagesAtom);
+
+  useEffect(() => {
+    setAnswers([{ id: 1, type: 1, content: "알겠어" }]);
+  }, []);
+
 
   return (
     <div className="w-full mt-auto flex flex-col gap-4 p-4 bg-[#2C2C2D]">

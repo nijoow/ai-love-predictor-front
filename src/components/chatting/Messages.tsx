@@ -1,11 +1,13 @@
-import { genderAtom, messageLoadingAtom } from "@/jotai/atoms";
+import { genderAtom, messageLoadingAtom, messagesAtom } from "@/jotai/atoms";
 import { Message } from "@/types/types";
 import { motion } from "framer-motion";
 import { useAtomValue, useAtom } from "jotai";
 import React, { useEffect, useRef, useState } from "react";
 
-const Messages = ({ messages }: { messages: Message[] }) => {
+const Messages = () => {
   const ref = useRef<null | HTMLDivElement>(null);
+
+  const [messages] = useAtom(messagesAtom);
   const gender = useAtomValue(genderAtom);
   const [, setMessageLoading] = useAtom(messageLoadingAtom);
   const scrollToBottom = () => {
