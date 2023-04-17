@@ -38,7 +38,7 @@ const Messages = () => {
               <div className="flex flex-col items-start">
                 {message.profile && (
                   <span className="my-1">
-                    {gender === "MALE" ? "옥순" : "영철"}
+                    {gender === "MALE" ? "영철" : "옥순"}
                   </span>
                 )}
                 <motion.div
