@@ -24,7 +24,10 @@ const Messages = () => {
       {messages.map((message, index) => {
         if (message.role === "AI")
           return (
-            <div className="flex gap-4" key={message.content}>
+            <div
+              className={`flex gap-4 ${message.profile ? "mt-3" : ""}`}
+              key={message.content}
+            >
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -56,9 +59,9 @@ const Messages = () => {
                         setMessageLoading(false);
                       }, 1000);
                   }}
-                  className="flex items-end gap-2 mb-4"
+                  className="flex items-end gap-2 mb-4 max-w-[400px]"
                 >
-                  <div className="self-start px-2 py-1 rounded-md shadow-md bg-gray-regular">
+                  <div className="self-start px-2 py-1 rounded-md shadow-md bg-gray-regular ">
                     {message.content}
                   </div>
                   <span className="text-xs min-w-fit">{message.time}</span>
@@ -72,7 +75,7 @@ const Messages = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0, delay: message.delay }}
-            className="flex items-end gap-2 mb-4 ml-auto"
+            className="flex items-end gap-2 mb-4 ml-auto mt-3 max-w-[400px]"
             onAnimationComplete={() => {
               scrollToBottom();
             }}
