@@ -26,7 +26,7 @@ const ChattingPage = () => {
         id: 0,
         role: "AI",
         profile: true,
-        content: `안녕 나는 ${gender === "MALE" ? "옥순" : "영철"}이야`,
+        content: `안녕 나는 ${gender === "MALE" ? "영철" : "옥순"}이야`,
         delay: 1,
         time: INITIAL_TIME,
       },
