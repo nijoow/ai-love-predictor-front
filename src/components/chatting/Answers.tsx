@@ -1,7 +1,8 @@
 import { answersAtom, messageLoadingAtom, messagesAtom } from "@/jotai/atoms";
-import { Message } from "@/types/types";
+import router from "next/router";
 import { useAtom } from "jotai";
 import React, { useEffect, useState } from "react";
+import Spinner from "../SVG/Spinner";
 
 const Answers = () => {
   const CURRENT_TIME = new Date().toLocaleTimeString().slice(0, -3);
@@ -10,7 +11,7 @@ const Answers = () => {
   const [messages, setMessages] = useAtom(messagesAtom);
 
   useEffect(() => {
-    setAnswers([{ id: 1, type: 1, content: "알겠어" }]);
+    setAnswers([{ id: 1, type: 1, content: "알겠어!" }]);
   }, []);
 
   const clickAnswerButton = async (answer: {
@@ -29,7 +30,8 @@ const Answers = () => {
         time: CURRENT_TIME,
       },
     ]);
-    fetch(`/api/chatting?id=${answer.id}&type=${answer.type}`)
+    const type = [3, 5, 7].includes(answer.id) ? 1 : answer.type;
+    fetch(`/api/chatting?id=${answer.id}&type=${type}`)
       .then((res) => res.json())
       .then((data) => {
         const questions = data.questions.map(
@@ -37,35 +39,49 @@ const Answers = () => {
             role: "AI",
             profile: index === 0,
             content,
-            delay: index === 0 ? 0 : index + 1,
+            delay: index + 1,
             time: CURRENT_TIME,
           })
         );
-        const answers = data.answers.map((content: string, index: number) => ({
-          id: answer.id + 1,
-          content: content,
-          type: index + 1,
-        }));
+        const answers = data.answers
+          ? data.answers.map((content: string, index: number) => ({
+              id: answer.id + 1,
+              content: content,
+              type: index + 1,
+            }))
+          : null;
         setMessages((messages) => [...messages, ...questions]);
         setAnswers(answers);
+        setMessageLoading(true);
       });
-
-    setMessageLoading(true);
   };
 
   return (
-    <div className="w-full mt-auto flex flex-col gap-4 p-4 bg-[#2C2C2D]">
-      {answers.map((answer) => (
+    <div className="w-full mt-auto flex flex-col gap-4 p-4 min-h-[180px]  bg-[#2C2C2D] items-center justify-center">
+      {messageLoading ? (
+        <Spinner />
+      ) : answers !== null ? (
+        answers.map((answer) => (
+          <button
+            key={answer.content}
+            className="w-full p-2 rounded-lg cursor-pointer bg-gray-light"
+            type="button"
+            disabled={messageLoading}
+            onClick={() => clickAnswerButton(answer)}
+          >
+            {answer.content}
+          </button>
+        ))
+      ) : (
         <button
-          key={answer.content}
-          className="p-2 rounded-lg cursor-pointer bg-gray-light"
+          className="w-full p-2 rounded-lg cursor-pointer bg-gray-light"
           type="button"
           disabled={messageLoading}
-          onClick={() => clickAnswerButton(answer)}
+          onClick={() => router.push("/result")}
         >
-          {answer.content}
+          결과보러가기
         </button>
-      ))}
+      )}
     </div>
   );
 };
