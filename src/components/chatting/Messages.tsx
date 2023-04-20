@@ -9,17 +9,12 @@ const Messages = () => {
 
   const [messages] = useAtom(messagesAtom);
   const gender = useAtomValue(genderAtom);
-  const [, setMessageLoading] = useAtom(messageLoadingAtom);
+  const [messageLoading, setMessageLoading] = useAtom(messageLoadingAtom);
   const scrollToBottom = () => {
     if (ref.current) {
       ref.current.scrollTop = ref.current.scrollHeight;
     }
   };
-
-  useEffect(() => {
-    scrollToBottom();
-    setMessageLoading(true);
-  }, [messages]);
 
   return (
     <div
@@ -30,23 +25,36 @@ const Messages = () => {
         if (message.role === "AI")
           return (
             <div className="flex gap-4" key={message.content}>
-              <div
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0, delay: message.delay }}
                 className={`w-12 h-12 rounded-xl ${
                   message.profile ? "bg-white" : ""
                 }`}
               />
               <div className="flex flex-col items-start">
                 {message.profile && (
-                  <span className="my-1">
+                  <motion.span
+                    className="my-1"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0, delay: 1 }}
+                  >
                     {gender === "MALE" ? "영철" : "옥순"}
-                  </span>
+                  </motion.span>
                 )}
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0, delay: message.delay }}
                   onAnimationComplete={() => {
-                    if (index === messages.length - 1) setMessageLoading(false);
+                    scrollToBottom();
+
+                    if (index === messages.length - 1)
+                      setTimeout(() => {
+                        setMessageLoading(false);
+                      }, 1000);
                   }}
                   className="flex items-end gap-2 mb-4"
                 >
@@ -66,7 +74,7 @@ const Messages = () => {
             transition={{ duration: 0, delay: message.delay }}
             className="flex items-end gap-2 mb-4 ml-auto"
             onAnimationComplete={() => {
-              if (index === messages.length - 1) setMessageLoading(false);
+              scrollToBottom();
             }}
             key={message.content}
           >
