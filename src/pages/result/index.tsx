@@ -32,7 +32,7 @@ const ResultPage = () => {
         <motion.div className="text-[96px]">{rounded}</motion.div>
         <span className="text-[64px]">%</span>
       </div>
-      <span className="text-[24px]">친절하고 세심한 당신은 스폰지밥 유형!</span>
+      <span className="text-[24px]">친절하고 세심한 당신은 *** 유형!</span>
       <div className="flex-[2]" />
     </div>
   );

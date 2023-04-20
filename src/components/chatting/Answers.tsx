@@ -1,14 +1,20 @@
-import { answersAtom, messageLoadingAtom, messagesAtom } from "@/jotai/atoms";
+import {
+  answersAtom,
+  messageLoadingAtom,
+  messagesAtom,
+  progressBarAtom,
+} from "@/jotai/atoms";
 import router from "next/router";
 import { useAtom } from "jotai";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Spinner from "../SVG/Spinner";
 
 const Answers = () => {
   const CURRENT_TIME = new Date().toLocaleTimeString().slice(0, -3);
   const [messageLoading, setMessageLoading] = useAtom(messageLoadingAtom);
   const [answers, setAnswers] = useAtom(answersAtom);
-  const [messages, setMessages] = useAtom(messagesAtom);
+  const [, setMessages] = useAtom(messagesAtom);
+  const [, setProgress] = useAtom(progressBarAtom);
 
   useEffect(() => {
     setAnswers([{ id: 1, type: 1, content: "알겠어!" }]);

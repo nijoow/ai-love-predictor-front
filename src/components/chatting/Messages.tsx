@@ -1,8 +1,7 @@
 import { genderAtom, messageLoadingAtom, messagesAtom } from "@/jotai/atoms";
-import { Message } from "@/types/types";
 import { motion } from "framer-motion";
 import { useAtomValue, useAtom } from "jotai";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 const Messages = () => {
   const ref = useRef<null | HTMLDivElement>(null);
@@ -10,6 +9,11 @@ const Messages = () => {
   const [messages] = useAtom(messagesAtom);
   const gender = useAtomValue(genderAtom);
   const [messageLoading, setMessageLoading] = useAtom(messageLoadingAtom);
+
+  useEffect(() => {
+    setMessageLoading(true);
+  }, []);
+
   const scrollToBottom = () => {
     if (ref.current) {
       ref.current.scrollTop = ref.current.scrollHeight;
