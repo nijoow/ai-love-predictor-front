@@ -20,7 +20,7 @@ const ChattingPage = () => {
   const [, setMessages] = useAtom(messagesAtom);
 
   useEffect(() => {
-    setProgress(37.5);
+    setProgress(30);
     setMessages([
       {
         id: 0,

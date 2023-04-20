@@ -11,7 +11,7 @@ const SelectGenderPage: NextPageWithLayout = () => {
   const [, setGender] = useAtom(genderAtom);
   const [, setProgress] = useAtom(progressBarAtom);
   useEffect(() => {
-    setProgress(12.5);
+    setProgress(10);
   }, []);
 
   return (

@@ -13,7 +13,7 @@ const UploadProfilePage: NextPageWithLayout = () => {
   const [createObjectURL, setCreateObjectURL] = useState<string | null>(null);
 
   useEffect(() => {
-    setProgress(25);
+    setProgress(20);
   }, []);
 
   const uploadToClient = (event: ChangeEvent<HTMLInputElement>) => {
