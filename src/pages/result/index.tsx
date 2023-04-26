@@ -37,7 +37,7 @@ const ResultPage = () => {
       </div>
     );
   return (
-    <div className="flex flex-col items-center w-full h-full gap-12 py-20 shadow-lg">
+    <div className="flex flex-col items-center w-full h-full gap-12 py-20 shadow-lg overflow-y-auto custom-scroll">
       <span className="sm:text-[24px] font-semibold text-center">
         당신이 연애할 확률은?
       </span>
@@ -46,7 +46,7 @@ const ResultPage = () => {
         <span className="text-[64px]">%</span>
       </div>
       <span className="text-[24px]">당신은 *** 유형!</span>
-      <div className="flex flex-col gap-2 px-16 text-[16px]">
+      <div className="flex flex-col gap-2.5 px-16 text-[16px] break-words leading-7">
         {results.map((result, index) =>
           result ? (
             <p key={index}>{`\u00A0${result}`}</p>
