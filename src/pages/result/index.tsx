@@ -1,16 +1,29 @@
 import Spinner from "@/components/SVG/Spinner";
 import { animate, motion, useMotionValue, useTransform } from "framer-motion";
 import React, { useEffect, useState } from "react";
-
+import { useRouter } from "next/router";
 const ResultPage = () => {
   const [loading, setLoading] = useState(false);
   const count = useMotionValue(0);
   const rounded = useTransform(count, Math.round);
+  const router = useRouter();
+  const { answersNum } = router.query;
+  const [results, setResults] = useState<string[]>([]);
+  useEffect(() => {
+    if (!answersNum) return;
+    fetch(`/api/result?answersNum=${answersNum}`)
+      .then((res) => res.json())
+      .then((data) => setResults(data));
+  }, [answersNum]);
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(true);
-      const controls = animate(count, 54, { duration: 3 });
+      const controls = animate(
+        count,
+        Math.floor(Math.random() * (75 - 25) + 25),
+        { duration: 3 }
+      );
 
       return controls.stop;
     }, 2500);
@@ -32,7 +45,12 @@ const ResultPage = () => {
         <motion.div className="text-[96px]">{rounded}</motion.div>
         <span className="text-[64px]">%</span>
       </div>
-      <span className="text-[24px]">친절하고 세심한 당신은 *** 유형!</span>
+      <span className="text-[24px]">당신은 *** 유형!</span>
+      <div className="flex flex-col gap-2 px-16 text-[16px]">
+        {results.map((result, index) => (
+          <span key={index}>{result}</span>
+        ))}
+      </div>
       <div className="flex-[2]" />
     </div>
   );
