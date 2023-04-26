@@ -6,7 +6,7 @@ import {
 } from "@/jotai/atoms";
 import router from "next/router";
 import { useAtom } from "jotai";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Spinner from "../SVG/Spinner";
 
 const Answers = () => {
@@ -16,6 +16,7 @@ const Answers = () => {
   const [, setMessages] = useAtom(messagesAtom);
   const [, setProgress] = useAtom(progressBarAtom);
 
+  const [answersNum, setAnswersNum] = useState("");
   useEffect(() => {
     setAnswers([{ id: 1, type: 1, content: "알겠어!" }]);
   }, []);
@@ -25,6 +26,8 @@ const Answers = () => {
     type: number;
     content: string;
   }) => {
+    setAnswersNum(answersNum + answer.type);
+
     setMessages((messages) => [
       ...messages,
       {
@@ -38,9 +41,11 @@ const Answers = () => {
     ]);
     setProgress(30 + 10 * answer.id);
     const type = [3, 5, 7].includes(answer.id) ? 1 : answer.type;
-    fetch(`/api/chatting?id=${answer.id}&type=${type}`)
+
+    fetch(`/api/chatting?id=${answer.id}&type=${type}&answersNum=${answersNum}`)
       .then((res) => res.json())
       .then((data) => {
+        const answersNum = data.answersNum;
         const questions = data.questions.map(
           (content: string, index: number) => ({
             role: "AI",
@@ -55,6 +60,7 @@ const Answers = () => {
               id: answer.id + 1,
               content: content,
               type: index + 1,
+              answersNum,
             }))
           : null;
         setMessages((messages) => [...messages, ...questions]);
@@ -84,7 +90,7 @@ const Answers = () => {
           className="w-full p-2 rounded-lg cursor-pointer bg-gray-light"
           type="button"
           disabled={messageLoading}
-          onClick={() => router.push("/result")}
+          onClick={() => router.push(`/result?answersNum=${answersNum}`)}
         >
           결과보러가기
         </button>
