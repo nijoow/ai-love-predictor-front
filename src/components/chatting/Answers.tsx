@@ -42,7 +42,7 @@ const Answers = () => {
     setProgress(30 + 10 * answer.id);
     const type = [3, 5, 7].includes(answer.id) ? 1 : answer.type;
 
-    fetch(`/api/chatting?id=${answer.id}&type=${type}&answersNum=${answersNum}`)
+    fetch(`/api/chatting?id=${answer.id}&type=${type}`)
       .then((res) => res.json())
       .then((data) => {
         const answersNum = data.answersNum;
