@@ -47,9 +47,20 @@ const ResultPage = () => {
       </div>
       <span className="text-[24px]">당신은 *** 유형!</span>
       <div className="flex flex-col gap-2 px-16 text-[16px]">
-        {results.map((result, index) => (
-          <span key={index}>{result}</span>
-        ))}
+        {results.map((result, index) =>
+          result ? (
+            <p key={index}>{`\u00A0${result}`}</p>
+          ) : (
+            <p key={index}>
+              하지만, 이러한 특성들은 각각이 연애 성향을 결정하는 데 영향을
+              미치는 것이 아니라, 개인의 특성과 경험, 환경적인 요인,성격적 특성,
+              가족, 친구, 문화적 배경 등 다양한 요인이 영향을 미칩니다. 그래서
+              위의 응답 과 별개로 자신의 장단점을 알고, 상대방을 존중하고
+              이해하며, 서로를 위한 노력을 기울인다면 좋은 인간관계를 유지하고,
+              성공적인 연애를 할 수 있을 것입니다.
+            </p>
+          )
+        )}
       </div>
       <div className="flex-[2]" />
     </div>
