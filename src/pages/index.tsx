@@ -1,9 +1,12 @@
 import ArrowRightIcon from "@/components/SVG/ArrowRightIcon";
 import Robot from "@/components/SVG/Robot";
 import Star from "@/components/SVG/Star";
+import { motion } from "framer-motion";
 import router from "next/router";
+import { useState } from "react";
 
 const MainPage = () => {
+  const [notification, setNotification] = useState(false);
   return (
     <div className="flex flex-col items-center w-full h-full gap-12 py-20 shadow-lg">
       <span className="font-PyeongChangPeace font-bold text-4xl sm:text-[48px] flex">
@@ -34,7 +37,30 @@ const MainPage = () => {
       >
         확률 알아보기 <ArrowRightIcon />
       </button>
-      <span className="text-[22px] mb-6 font-semibold">테스트 공유하기</span>
+      <button
+        className="text-[22px] mb-6 font-semibold"
+        type="button"
+        onClick={() => {
+          if (!window || notification) return;
+          navigator.clipboard.writeText(window.location.href);
+          setNotification(true);
+          setTimeout(() => {
+            setNotification(false);
+          }, 3000);
+        }}
+      >
+        테스트 공유하기
+      </button>
+      {notification && (
+        <motion.div
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 0 }}
+          transition={{ duration: 0.5, delay: 2, easing: "easein" }}
+          className={`fixed px-8 py-2 rounded-md bottom-6 bg-slate-900 `}
+        >
+          <span>url이 복사되었습니다.</span>
+        </motion.div>
+      )}
     </div>
   );
 };
